@@ -1,10 +1,4 @@
 import pandas as pd
 
-df = pd.read_csv(r'C:\Users\Ahmed Shafique\Documents\Projects\FYP\Datasets\latitude_32.csv')
-df = df.drop_duplicates()
-df = df.dropna()
-df['time'] = pd.to_datetime(df['time'])
-df['year'] = df['time'].dt.year
-df['month'] = df['time'].dt.month
-df['hour'] = df['time'].dt.hour
-# print(df.info())
+df = pd.read_csv(r'C:\Users\Ahmed Shafique\Documents\Projects\FYP\Datasets\latitude32\2019_latitude_32_dataset.csv')
+print(df.head())
