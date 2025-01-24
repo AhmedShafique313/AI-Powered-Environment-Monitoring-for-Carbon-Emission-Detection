@@ -1,10 +1,11 @@
 import pandas as pd
 
+# File path to the source dataset
 file_path = r'C:\Users\Ahmeds Gaming Laptop\Documents\Projects\AI-Powered-Environment-Monitoring-for-Carbon-Emission-Detection\22temprature_dataset.csv'
 df = pd.read_csv(file_path)
 
 # List of columns for months (adjust based on your dataset)
-month_columns = ['Avg_Jan', 'Avg_Feb', 'Avg_Mar', 'Avg_Apr','Avg_Jun', 
+month_columns = ['Avg_Jan', 'Avg_Feb', 'Avg_Mar', 'Avg_Apr', 'Avg_May', 'Avg_Jun', 
                  'Avg_Jul', 'Avg_Aug', 'Avg_Sep', 'Avg_Oct', 'Avg_Nov', 'Avg_Dec']
 
 # Create an empty DataFrame to store the repeated values for all months
