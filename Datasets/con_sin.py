@@ -4,7 +4,7 @@ import numpy as np
 file_path = r'C:\Users\Ahmeds Gaming Laptop\Documents\Projects\AI-Powered-Environment-Monitoring-for-Carbon-Emission-Detection\preprocessing\2023_latitude_32_dataset.csv'
 df = pd.read_csv(file_path)
 
-df['time'] = pd.to_datetime(df['time'])
+df['time'] = pd.to_datetime(df['time_of_day'])
 
 df['hour'] = df['time'].dt.hour
 df['minute'] = df['time'].dt.minute
