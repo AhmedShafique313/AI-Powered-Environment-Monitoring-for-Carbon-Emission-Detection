@@ -1,4 +1,4 @@
-from split import X_train, X_test, y_train_pm25,  y_test_pm25, y_train_temp, y_test_temp
+from split import *
 import torch
 import torch.nn as nn
 import torch.optim as optim

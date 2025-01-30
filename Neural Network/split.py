@@ -1,4 +1,4 @@
-from dataload import X, y_pm25, y_temp
+from dataload import *
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
