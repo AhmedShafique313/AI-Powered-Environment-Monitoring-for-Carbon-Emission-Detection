@@ -1,4 +1,29 @@
-from split import *
+import pandas as pd
+
+df = pd.read_csv(r'C:\Users\Ahmeds Gaming Laptop\Documents\Projects\AI-Powered-Environment-Monitoring-for-Carbon-Emission-Detection\refined datasets\2023_dataset_32.csv')
+# print(df.head())
+# print('-----------------------------')
+# print(df.tail())
+# print('-----------------------------')
+# print(df.info())
+
+features = ['pm2_5', 'no', 'no2', 'o3', 'co', 'so2', 'pm10', 'ch4', 'time_sin', 'time_cos']
+target_pm25 = 'PM2.5_AQI'
+target_temp = 'avg_temp'
+
+X = df[features].values
+y_pm25 = df[target_pm25].values
+y_temp = df[target_temp].values
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+X_train, X_test, y_train_pm25, y_test_pm25, y_train_temp, y_test_temp = train_test_split(X_scaled, y_pm25, y_temp, test_size=0.2, random_state=42)
+
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -75,3 +100,53 @@ for epoch in range(epochs):
     train_losses_temp.append(running_loss_temp / len(train_loader))
 
     print(f"Epoch {epoch+1}/{epochs}, Loss PM2.5: {running_loss_pm25 / len(train_loader):.4f}, Loss Temp: {running_loss_temp / len(train_loader):.4f}")
+
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.plot(train_losses_pm25, label='PM2.5 AQI Loss')
+plt.title('Training Loss for PM2.5 AQI')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(train_losses_temp, label='Temperature Loss')
+plt.title('Training Loss for Temperature')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.show()
+
+import numpy as np
+import math
+from sklearn.metrics import mean_squared_error
+
+model.eval()
+predictions_pm25 = []
+predictions_temp = []
+true_pm25 = []
+true_temp = []
+
+with torch.no_grad():
+    for inputs, labels_pm25, labels_temp in test_loader:
+        inputs = inputs.view(inputs.size(0), 10, 1)  # Reshape inputs
+        outputs_pm25, outputs_temp = model(inputs)
+        predictions_pm25.append(outputs_pm25.numpy())
+        predictions_temp.append(outputs_temp.numpy())
+        true_pm25.append(labels_pm25.numpy())
+        true_temp.append(labels_temp.numpy())
+
+predictions_pm25 = np.concatenate(predictions_pm25, axis=0)
+predictions_temp = np.concatenate(predictions_temp, axis=0)
+true_pm25 = np.concatenate(true_pm25, axis=0)
+true_temp = np.concatenate(true_temp, axis=0)
+
+rmse_pm25 = math.sqrt(mean_squared_error(true_pm25, predictions_pm25))
+rmse_temp = math.sqrt(mean_squared_error(true_temp, predictions_temp))
+
+print(f"Test RMSE for PM2.5 AQI: {rmse_pm25:.4f}")
+print(f"Test RMSE for Temperature: {rmse_temp:.4f}")
