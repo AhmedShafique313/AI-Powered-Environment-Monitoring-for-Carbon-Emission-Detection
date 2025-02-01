@@ -21,7 +21,7 @@ def calculate_aqi(concentration, breakpoints):
             return ((bp[3] - bp[2]) / (bp[1] - bp[0])) * (concentration - bp[0]) + bp[2]
     return None
 
-file_path = r'C:\Users\Ahmeds Gaming Laptop\Documents\Projects\AI-Powered-Environment-Monitoring-for-Carbon-Emission-Detection\Datasets\data_transformed_31_6.csv'
+file_path = r'C:\Users\Ahmeds Gaming Laptop\Documents\Projects\AI-Powered-Environment-Monitoring-for-Carbon-Emission-Detection\Datasets\data_transformed_32_4.csv'
 df = pd.read_csv(file_path)
 
 df['PM2.5_AQI'] = df['pm2_5'].apply(lambda x: calculate_aqi(x, breakpoints["PM2.5"]))
