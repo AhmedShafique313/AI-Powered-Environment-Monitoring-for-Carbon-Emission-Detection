@@ -5,3 +5,5 @@ torch
 torchvision
 torchaudio
 scikit-learn
+gspread
+streamlit
